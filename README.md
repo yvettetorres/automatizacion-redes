@@ -31,12 +31,14 @@
    - 2.1 [Descripción de herramientas](#descripción-de-herramientas)
      - [Docker Engine](#docker-engine)
      - [Docker Compose](#docker-compose)
+     - [Docker Swarm](#docker-swarm)
      - [Visual Studio Code](#visual-studio-code)
      - [Git y GitHub](#git-y-github)
    - 2.2 [Procedimiento de instalación](#procedimiento-de-instalación)
      - [Visual Studio Code](#visual-studio-code-1)
      - [Docker Engine](#docker-engine-1)
      - [Docker Compose](#docker-compose-1)
+     - [Docker Swarm](#docker-swarm-1)
      - [Git](#git)
    - 2.3 [Evidencias de funcionamiento](#evidencias-de-funcionamiento)
      - [hello-world](#ejecución-de-hello-world)
@@ -47,10 +49,9 @@
      - [Frontend](#frontend-funcionando)
      - [Backend](#backend-funcionando)
      - [PhpMyAdmin](#phpmyadmin-funcionando)
-3. [Lista de verificación](#lista-de-verificación)
-4. [Conclusión](#conclusión)
-5. [Anexo de recursos](#anexo-de-recursos)
-6. [Bibliografía](#bibliografía)
+3. [Conclusión](#conclusión)
+4. [Anexo de recursos](#anexo-de-recursos)
+5. [Bibliografía](#bibliografía)
 
 ---
 
@@ -76,6 +77,11 @@ Docker Engine es el motor de contenedorización de código abierto que permite c
 
 Docker Compose es una herramienta que permite definir y ejecutar aplicaciones multi-contenedor mediante un archivo de configuración en formato YAML. Con un solo comando (`docker compose up`) es posible levantar todos los servicios definidos en el archivo, incluyendo sus redes, volúmenes y dependencias. En este proyecto se utilizó para orquestar los servicios de MySQL, PhpMyAdmin, backend y frontend de forma coordinada.
 
+#### Docker Swarm
+
+Docker Swarm es la herramienta nativa de orquestación de contenedores integrada en Docker Engine. Permite agrupar múltiples hosts Docker en un clúster llamado **swarm**, donde un nodo actúa como **manager** (administrador) y los demás como **workers** (trabajadores). El nodo manager se encarga de distribuir y gestionar las tareas entre los workers, garantizando alta disponibilidad y escalabilidad de los servicios desplegados.
+
+A diferencia de Docker Compose, que está orientado a entornos de desarrollo en una sola máquina, Docker Swarm está diseñado para entornos de producción donde los servicios deben ejecutarse en varios servidores simultáneamente. Entre sus principales características se encuentran el balanceo de carga automático, el escalado de servicios, la recuperación automática ante fallos y la comunicación segura entre nodos mediante TLS.
 
 #### Visual Studio Code
 
@@ -140,6 +146,21 @@ docker compose version
 ```
 
 ![Docker Compose version](images/docker-compose-version.png)
+
+#### Docker Swarm
+
+Docker Swarm viene integrado en Docker Engine desde la versión 1.12, por lo que no requiere instalación adicional. Solo es necesario inicializarlo con el siguiente comando en el nodo manager:
+
+```bash
+# Inicializar el swarm
+docker swarm init --advertise-addr 
+
+# Verificar que el swarm esté activo
+docker info | grep Swarm
+```
+
+Al ejecutarse correctamente, Docker genera un token para unir otros nodos al clúster y el nodo actual queda configurado como manager.
+
 
 #### Git
 
@@ -223,24 +244,6 @@ Interfaz de PhpMyAdmin accesible desde `192.168.56.101:9091`:
 
 ![PhpMyAdmin](images/phpmyadmin.png)
 
-
----
-
-## Lista de verificación
-
-| # | Elemento | Estado |
-|---|----------|--------|
-| 1 | Visual Studio Code instalado y funcional | ✅ |
-| 2 | Docker Engine instalado en Debian | ✅ |
-| 3 | Docker Compose instalado en Debian | ✅ |
-| 4 | Git instalado en Debian | ✅ |
-| 5 | Imagen hello-world ejecutada correctamente | ✅ |
-| 6 | Archivo stack-myrt.yml creado y ejecutado | ✅ |
-| 7 | Contenedor MySQL activo | ✅ |
-| 8 | Contenedor PhpMyAdmin activo en puerto 9091 | ✅ |
-| 9 | Contenedor Backend activo en puerto 8081 | ✅ |
-| 10 | Contenedor Frontend activo en puerto 8082 | ✅ |
-| 11 | Repositorio subido a GitHub | ✅ |
 
 ---
 
